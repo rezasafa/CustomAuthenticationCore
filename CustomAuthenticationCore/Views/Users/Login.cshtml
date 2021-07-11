@@ -1,0 +1,131 @@
+@model Sepehr4Core.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "ورود به برنامه";
+}
+
+<div class="container body-content">
+    <label></label>
+    <h2>@ViewBag.Title</h2>
+    <h4>برای ورود نام کاربری و رمز عبور را وارد نمایید.</h4>
+    <hr />
+    <div class="row rowMargin">
+        <div class="col-md-4">
+            <section id="loginForm">
+                @using (Html.BeginForm("LogIn", "Users", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post,null, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label class="control-label">شرکت را انتخاب نمایید</label>
+                        <div class="col-md-10">
+                            <select id="Company" name="Company" class="form-control" onchange="GetYear(this.value);"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">سال مالی را انتخاب نمایید</label>
+                        <div class="col-md-10">
+                            <select id="Year" name="Year" class="form-control" onchange=""></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="ورود" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="~/img/Contact.gif" />
+                </div>
+                <div class="col-md-9">
+                    <div>
+                        <h5>
+                            برای کسب اطلاعات بیشتر با ما تماس بگیرید:
+                        </h5>
+                    </div>
+                    <div>
+                        <h5>
+                            پست الکترونیک : <a href="mailto:info@setarehsepehr.com">info@setarehsepehr.com</a>
+                        </h5>
+                    </div>
+                    <div>
+                        <h5>
+                            تلفن : <a href="tel:00982188039855">00982188039855</a>
+                        </h5>
+                    </div>
+                    <div>
+                        <h5>
+                            فکس : <a href="tel:00982188039448">00982188039448</a>
+                        </h5>
+                    </div>
+                    <div>
+                        <h5>
+                            آدرس : تهران - میدان ونک - خیابان ملاصدرا - ساحتمان سارا - طبقه سوم - واحد 13
+                        </h5>
+                    </div>
+                    <div>
+                        <h5>
+                            کد پستی : 1991716476
+                        </h5>
+                    </div>
+                    <div>
+                        <h5>
+                            وب سایت : <a href="http://setarehsepehr.com">www.setarehsepehr.com</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/myGlobal.js"></script>
+<script type="text/javascript">
+    function GetYear(_CoName) {
+        var procemessage = "<option value='0'>لطفا صبر کنید</option>";
+        $("#Year").html(procemessage).show();
+        
+        var markup = "";
+        var getVal = js_getYear(_CoName);
+        for (var x = 0; x < getVal.length; x++) {
+            markup += "<option value=" + getVal[x].FinYear + ">" + getVal[x].FinYear + "</option>";
+        }
+        $("#Year").html(markup).show();
+    }
+    $(function () {
+        var procemessage = "<option value='0'>لطفا صبر کنید</option>";
+        $("#Company").html(procemessage).show();
+        var markup = "";
+        var getVal = js_getCoNames();
+        for (var x = 0; x < getVal.length; x++) {
+            markup += "<option value=" + getVal[x].CompanyID + ">" + getVal[x].Name + "</option>";
+        }
+        $("#Company").html(markup).show();
+        GetYear(getVal[0].CompanyID);
+    });
+</script>

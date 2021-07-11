@@ -1,0 +1,2191 @@
+﻿
+@{
+    ViewBag.Title = "حسابها";
+
+    var conv = new Sepehr4Core.Classes.ENCODES();
+    var company = conv.ConvetToUTF8(Context.Request.Cookies["company"]);
+    var year = conv.ConvetToUTF8(Context.Request.Cookies["year"]);
+    var sysvar = new Sepehr4Core.Classes.SystemVariable();
+}
+
+<div class="form-scroll">
+    <div class="container body-content">
+        <div class="row rowMargin">
+            <div class="col-md-6">
+                <div>
+                    <table id="myAccountTable" class="small_Table">
+                        <thead>
+                            <tr>
+                                <td><button id="btnBeforeLevel" style="width: 80px;">سطح قبلی</button></td>
+                                <td style="text-align: center;"><label id="TitleLevel" style="width: 150px;"></label></td>
+                                <td><button id="btnNextLevel" style="width: 80px;">سطح بعدی</button></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    شماره حساب
+                                </th>
+                                <th colspan="2">
+                                    نام حساب
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbAccount"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6" style="text-align: center;">
+                <div>
+                    <label id="lbl_LevelName1" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo1" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName1" class="lblAccNameAccitle"></label>
+                </div>
+                <div>
+                    <label id="lbl_LevelName2" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo2" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName2" class="lblAccNameAccitle"></label>
+                </div>
+                <div>
+                    <label id="lbl_LevelName3" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo3" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName3" class="lblAccNameAccitle"></label>
+                </div>
+                <div>
+                    <label id="lbl_LevelName4" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo4" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName4" class="lblAccNameAccitle"></label>
+                </div>
+                <div>
+                    <label id="lbl_LevelName5" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo5" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName5" class="lblAccNameAccitle"></label>
+                </div>
+                <div>
+                    <label id="lbl_LevelName6" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo6" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName6" class="lblAccNameAccitle"></label>
+                </div>
+                <div>
+                    <label id="lbl_LevelName7" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo7" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName7" class="lblAccNameAccitle"></label>
+                </div>
+                <div>
+                    <label id="lbl_LevelName8" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo8" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName8" class="lblAccNameAccitle"></label>
+                </div>
+                <div>
+                    <label id="lbl_LevelName9" class="lblLevelTitle"></label>
+                    <label id="lbl_AccNo9" class="lblLevelTitle"></label>
+                    <label id="lbl_AccName9" class="lblAccNameAccitle"></label>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="width: 100px;">
+                                شماره حساب
+                            </td>
+                            <td style="width: 500px;">
+                                <input type="text" class="form-control" id="txtAccNo" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px;">
+                                نام حساب
+                            </td>
+                            <td style="width: 500px;">
+                                <input type="text" class="form-control" id="txtAccName" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px;">
+                                نام لاتین حساب
+                            </td>
+                            <td style="width: 500px;">
+                                <input type="text" class="form-control" id="txtLAccName" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px;">
+                                شرح حساب
+                            </td>
+                            <td style="width: 500px;">
+                                <textarea type="text" class="form-control" id="txtNotes" rows="5"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr />
+                @if (sysvar.AccEdition > 1)
+                {
+                    <div id="GroupsTafsil" class="row">
+                        <div class="col-md-4">
+                            <fieldset>
+                                <legend>تفصیل 1</legend>
+                                <table id="Lev1">
+                                    <tbody></tbody>
+                                </table>
+                            </fieldset>
+                        </div>
+                        @if (sysvar.AccEdition == 3)
+                        {
+                            <div class="col-md-4">
+                                <fieldset>
+                                    <legend>تفصیل 2</legend>
+                                    <table id="Lev2">
+                                        <tbody></tbody>
+                                    </table>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-4">
+                                <fieldset>
+                                    <legend>تفصیل 3</legend>
+                                    <table id="Lev3">
+                                        <tbody></tbody>
+                                    </table>
+                                </fieldset>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>مانده حساب</legend>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkRem_Debit" />
+                                    </td>
+                                    <td>
+                                        <label>بدهکار</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkRem_Credit" />
+                                    </td>
+                                    <td>
+                                        <label>بستانکار</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkRem_Debit_All" />
+                                    </td>
+                                    <td>
+                                        <label>همواره بدهکار</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkRem_Credit_All" />
+                                    </td>
+                                    <td>
+                                        <label>همواره بستانکار</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>نوع ارز</legend>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkAcc_Currency" />
+                                    </td>
+                                    <td style="width: 85%;">
+                                        <label>حساب ارزی</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>نام ارز</label>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" id="cmbCurrency_Type"></select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>گروه حساب</legend>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkBalance" />
+                                    </td>
+                                    <td>
+                                        <label>ترازنامه ای</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkLoseProfit" />
+                                    </td>
+                                    <td>
+                                        <label>سودوزیانی</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkOther" />
+                                    </td>
+                                    <td>
+                                        <label>انتظامی</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>وضعیت حساب</legend>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkActive" />
+                                    </td>
+                                    <td>
+                                        <label>فعال</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkLast_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>آخرین حساب</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>نوع حساب</legend>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkCash" />
+                                    </td>
+                                    <td>
+                                        <label>صندوق</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkBank" />
+                                    </td>
+                                    <td>
+                                        <label>بانک</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkProduct_Acc" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>موجودی محصول</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkPOS" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>پایانه فروش (POS)</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkRaw_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>موجودی مواد</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkPacking_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>موجودی بسته بندی</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkInBank" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>اسناد در جریان وصول</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkInProgress_Acc" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>موجودی کالای در جریان ساخت</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkPayable_Acc" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>اسناد پرداختنی</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkSupplies_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>موجودی ملزومات</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkTools_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>موجودی ابزار آلات</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkReceivable_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>اسناد دریافتنی</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkReceivable_Return_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>اسناد برگشتنی</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkParts_Acc" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>موجودی قطعات یدکی</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkExpense" />
+                                    </td>
+                                    <td>
+                                        <label>هزینه</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkOther_Expense" />
+                                    </td>
+                                    <td>
+                                        <label>سایر هزینه</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkAsset_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>موجودی اموال</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkPert_Acc" />
+                                    </td>
+                                    <td>
+                                        <label>موجودی ضایعات</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkRevenue" />
+                                    </td>
+                                    <td>
+                                        <label>درآمد</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkOther_Revenue" />
+                                    </td>
+                                    <td>
+                                        <label>سایر درآمد</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkDeposit_Other_Acc" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>موجودی کالای امانی دیگران نزد ما</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkPurchase" />
+                                    </td>
+                                    <td>
+                                        <label>خرید</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkSales" />
+                                    </td>
+                                    <td colspan="6">
+                                        <label>فروش</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkPurchase_Discount" />
+                                    </td>
+                                    <td>
+                                        <label>تخفیف خرید</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkSales_Discount" />
+                                    </td>
+                                    <td>
+                                        <label>تخفیف فروش</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkCost_Basis" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>بهای تمام شده کالای فروخته شده</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkReturnPurchase" />
+                                    </td>
+                                    <td>
+                                        <label>برگشت خرید</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkReturnSales" />
+                                    </td>
+                                    <td>
+                                        <label>برگشت فروش</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkCost_BasisP" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>بهای تمام شده کالای ساخته شده</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkPurchase_Variance" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>انحراف بهای خرید</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkCostsProduct" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>هزینه مستقیم / سربار جذب شده</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkConsume_Variance" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>انحراف بهای مصرف</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkLoss_Profit" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>حساب خلاصه سودوزیان</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkTolls" />
+                                    </td>
+                                    <td>
+                                        <label>تجمیع عوارض</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkTolls_Cost" />
+                                    </td>
+                                    <td>
+                                        <label>هزینه عوارض</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkOpen_Acc" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>حساب افتتاحیه</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkVAT" />
+                                    </td>
+                                    <td>
+                                        <label>فروش VAT</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkVATP" />
+                                    </td>
+                                    <td>
+                                        <label>خرید VAT</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkClose_Acc" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>حساب اختتامیه</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkProfit_Ghesti" />
+                                    </td>
+                                    <td colspan="3">
+                                        <label>سود تحقق نیافته اقساطی</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkCustomer" />
+                                    </td>
+                                    <td>
+                                        <label>اشخاص</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkVisitor" />
+                                    </td>
+                                    <td>
+                                        <label>ویزیتور / واسطه</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>سیستم</legend>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkAcc_Store" />
+                                    </td>
+                                    <td>
+                                        <label>انبار</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkAcc_Sales" />
+                                    </td>
+                                    <td>
+                                        <label>فروش</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkAcc_PayRecv" />
+                                    </td>
+                                    <td>
+                                        <label>خزانه</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkPayRoll" />
+                                    </td>
+                                    <td>
+                                        <label>حقوق و دستمزد</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="container body-content">
+        <hr />
+        <button class="btn btn-info" id="btnNew">جدید</button>
+        <button class="btn btn-info" id="btnSave">ثبت</button>
+        <button class="btn btn-info" id="btnSearch">جستجو</button>
+        <button class="btn btn-info" id="btnDel">حذف</button>
+        <button class="btn btn-info" id="btnTurnOver">گردش</button>
+        <button class="btn btn-info" id="btnReload">بازخوانی</button>
+        <button class="btn btn-dark" id="btnClose">بستن پنجره</button>
+    </div>
+</div>
+
+<div class="modal fade myfont" id="MyModal_TurnOver" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">گردش حساب</h4>
+            </div>
+            <div class="modal-body">
+                <table class="myTurnOverTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 150px;">
+                                بدهکار
+                            </th>
+                            <th style="width: 150px;">
+                                بستانکار
+                            </th>
+                            <th style="width: 150px;">
+                                مانده
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width: 150px;">
+                                <label id="lblDebit"></label>
+                            </td>
+                            <td style="width: 150px;">
+                                <label id="lblCredit"></label>
+                            </td>
+                            <td style="width: 150px;">
+                                <label id="lblRem"></label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">بستن پنجره</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade myfont" id="MyModal_NewAccount" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">حساب جدید</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                شماره حساب
+                            </td>
+                            <td style="width: 100px;">
+                                <input type="text" class="form-control" id="txtNew_Acc_No" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                نام حساب
+                            </td>
+                            <td style="width: 200px;">
+                                <input type="text" class="form-control" id="txtNew_Acc_Name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                نام  لاتین حساب
+                            </td>
+                            <td style="width: 200px;">
+                                <input type="text" class="form-control" id="txtNew_LAcc_Name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                شرح حساب
+                            </td>
+                            <td style="width: 200px;">
+                                <input type="text" class="form-control" id="txtNew_Acc_Desc" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btn_NewAcc">تایید</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">بستن پنجره</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade myfont" id="MyModal_SearchAccounts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">جستجو حساب</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td>
+                            شماره حساب
+                        </td>
+                        <td style="width: 100px;">
+                            <input type="text" style="width : 100%;" id="s_Acc_No" />
+                        </td>
+                        <td>
+                            <button type="button" id="btnDOSearch">تایید</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            نام حساب
+                        </td>
+                        <td style="width: 200px;">
+                            <input type="text" style="width : 100%;" id="s_Acc_Name" />
+                        </td>
+                        <td>
+                            <button type="button" data-dismiss="modal">بستن</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            نام  لاتین حساب
+                        </td>
+                        <td style="width: 200px;">
+                            <input type="text" style="width : 100%;" id="s_LAcc_Name" />
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sRem_Debit" />
+                        </td>
+                        <td>
+                            <label>بدهکار</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sRem_Credit" />
+                        </td>
+                        <td>
+                            <label>بستانکار</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sActive" />
+                        </td>
+                        <td>
+                            <label>فعال</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sBalance" />
+                        </td>
+                        <td>
+                            <label>ترازنامه ای</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sOther" />
+                        </td>
+                        <td>
+                            <label>انتظامی</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sAcc_Currency" />
+                        </td>
+                        <td style="width: 100px;">
+                            <label>حساب ارزی</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sRem_Debit_All" />
+                        </td>
+                        <td>
+                            <label>همواره بدهکار</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sRem_Credit_All" />
+                        </td>
+                        <td>
+                            <label>همواره بستانکار</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sLast_Acc" />
+                        </td>
+                        <td>
+                            <label>آخرین حساب</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sLoseProfit" />
+                        </td>
+                        <td>
+                            <label>سودوزیانی</label>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <label>نام ارز</label>
+                        </td>
+                        <td>
+                            <select id="scmbCurrency_Type" style="width: 100px;"></select>
+                        </td>
+                    </tr>
+                </table>
+                <hr />
+                <table>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sCash" />
+                        </td>
+                        <td>
+                            <label>صندوق</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sBank" />
+                        </td>
+                        <td>
+                            <label>بانک</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sProduct_Acc" />
+                        </td>
+                        <td colspan="3">
+                            <label>موجودی محصول</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sPOS" />
+                        </td>
+                        <td colspan="3">
+                            <label>پایانه فروش (POS)</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sRaw_Acc" />
+                        </td>
+                        <td>
+                            <label>موجودی مواد</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sPacking_Acc" />
+                        </td>
+                        <td>
+                            <label>موجودی بسته بندی</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sInBank" />
+                        </td>
+                        <td colspan="3">
+                            <label>اسناد در جریان وصول</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sInProgress_Acc" />
+                        </td>
+                        <td colspan="3">
+                            <label>موجودی کالای در جریان ساخت</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sPayable_Acc" />
+                        </td>
+                        <td colspan="3">
+                            <label>اسناد پرداختنی</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sSupplies_Acc" />
+                        </td>
+                        <td>
+                            <label>موجودی ملزومات</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sTools_Acc" />
+                        </td>
+                        <td>
+                            <label>موجودی ابزار آلات</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sReceivable_Acc" />
+                        </td>
+                        <td>
+                            <label>اسناد دریافتنی</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sReceivable_Return_Acc" />
+                        </td>
+                        <td>
+                            <label>اسناد برگشتنی</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sParts_Acc" />
+                        </td>
+                        <td colspan="3">
+                            <label>موجودی قطعات یدکی</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sExpense" />
+                        </td>
+                        <td>
+                            <label>هزینه</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sOther_Expense" />
+                        </td>
+                        <td>
+                            <label>سایر هزینه</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sAsset_Acc" />
+                        </td>
+                        <td>
+                            <label>موجودی اموال</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sPert_Acc" />
+                        </td>
+                        <td>
+                            <label>موجودی ضایعات</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sRevenue" />
+                        </td>
+                        <td>
+                            <label>درآمد</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sOther_Revenue" />
+                        </td>
+                        <td>
+                            <label>سایر درآمد</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sDeposit_Other_Acc" />
+                        </td>
+                        <td colspan="3">
+                            <label>موجودی کالای امانی دیگران نزد ما</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sPurchase" />
+                        </td>
+                        <td>
+                            <label>خرید</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sSales" />
+                        </td>
+                        <td colspan="6">
+                            <label>فروش</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sPurchase_Discount" />
+                        </td>
+                        <td>
+                            <label>تخفیف خرید</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sSales_Discount" />
+                        </td>
+                        <td>
+                            <label>تخفیف فروش</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sCost_Basis" />
+                        </td>
+                        <td colspan="3">
+                            <label>بهای تمام شده کالای فروخته شده</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sReturnPurchase" />
+                        </td>
+                        <td>
+                            <label>برگشت خرید</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sReturnSales" />
+                        </td>
+                        <td>
+                            <label>برگشت فروش</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sCost_BasisP" />
+                        </td>
+                        <td colspan="3">
+                            <label>بهای تمام شده کالای ساخته شده</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sPurchase_Variance" />
+                        </td>
+                        <td colspan="3">
+                            <label>انحراف بهای خرید</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sCostsProduct" />
+                        </td>
+                        <td colspan="3">
+                            <label>هزینه مستقیم / سربار جذب شده</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sConsume_Variance" />
+                        </td>
+                        <td colspan="3">
+                            <label>انحراف بهای مصرف</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sLoss_Profit" />
+                        </td>
+                        <td colspan="3">
+                            <label>حساب خلاصه سودوزیان</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sTolls" />
+                        </td>
+                        <td>
+                            <label>تجمیع عوارض</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sTolls_Cost" />
+                        </td>
+                        <td>
+                            <label>هزینه عوارض</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sOpen_Acc" />
+                        </td>
+                        <td colspan="3">
+                            <label>حساب افتتاحیه</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sVAT" />
+                        </td>
+                        <td>
+                            <label>فروش VAT</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sVATP" />
+                        </td>
+                        <td>
+                            <label>خرید VAT</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sClose_Acc" />
+                        </td>
+                        <td colspan="3">
+                            <label>حساب اختتامیه</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sProfit_Ghesti" />
+                        </td>
+                        <td colspan="3">
+                            <label>سود تحقق نیافته اقساطی</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sCustomer" />
+                        </td>
+                        <td>
+                            <label>اشخاص</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sVisitor" />
+                        </td>
+                        <td>
+                            <label>ویزیتور / واسطه</label>
+                        </td>
+                    </tr>
+                </table>
+                <hr />
+                <table>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="sAcc_Store" />
+                        </td>
+                        <td>
+                            <label>انبار</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sAcc_Sales" />
+                        </td>
+                        <td>
+                            <label>فروش</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sAcc_PayRecv" />
+                        </td>
+                        <td>
+                            <label>خزانه</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="sPayRoll" />
+                        </td>
+                        <td>
+                            <label>حقوق و دستمزد</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade myfont" id="MyModal_SearchResult" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">نتیجه جستجو</h4>
+            </div>
+            <div class="modal-body">
+                <table class="small_Table" id="mySearchResultTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">
+                                شماره حساب
+                            </th>
+                            <th style="width: 300px;">
+                                نام حساب
+                            </th>
+                            <th style="width: 20px;">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">بستن پنجره</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/myAcc.js"></script>
+<script src="~/js/myTafsils.js"></script>
+<script>
+    var cell_Content = '';
+    var coname = '@company';
+    var year = '@year';
+    var Acc_Levels = Acc_Levels;
+    var level1 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level1_Len"]);
+    var level2 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level2_Len"]);
+    var level3 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level3_Len"]);
+    var level4 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level4_Len"]);
+    var level5 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level5_Len"]);
+    var level6 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level6_Len"]);
+    var level7 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level7_Len"]);
+    var level8 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level8_Len"]);
+    var level9 = @conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level9_Len"]);
+    var levelName1 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level1_Name"])';
+    var levelName2 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level2_Name"])';
+    var levelName3 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level3_Name"])';
+    var levelName4 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level4_Name"])';
+    var levelName5 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level5_Name"])';
+    var levelName6 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level6_Name"])';
+    var levelName7 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level7_Name"])';
+    var levelName8 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level8_Name"])';
+    var levelName9 = '@conv.ConvetToUTF8(Context.Request.Cookies["Acc_Level9_Name"])';
+    var selected_row = -1;
+    var first_Load = false;
+    var current_Level = 1;
+
+    $(function () {
+        var procemessage = "<option value='0'>لطفا صبر کنید</option>";
+        $('#cmbCurrency_Type').html(procemessage).show();
+        var markup = "<option value=0 selected>---</option>";
+        var myVal = js_getCurrency_Type(coname, year, '');
+        for (var x = 0; x < myVal.length; x++) {
+            markup += "<option value=" + myVal[x].Currency_Type + ">" + myVal[x].Currency_Type + ' - ' + myVal[x].Currency_Symbol + "</option>";
+        }
+        $("#cmbCurrency_Type").html(markup).show();
+        $("#scmbCurrency_Type").html(markup).show();
+        document.getElementById('btnBeforeLevel').setAttribute('disabled', true);
+        fill_DGV('', current_Level,'');
+        if (accEdition > 1) {
+            fill_Tafsil_Group('Lev1', '1');
+        }
+        if (accEdition == 3) {
+            fill_Tafsil_Group('Lev2', '2');
+            fill_Tafsil_Group('Lev3', '3');
+        }
+    });
+
+    $('#btnBeforeLevel').click(function () {
+        beforeLevel();
+    });
+    $('#btnNextLevel').click(function () {
+        nextLevel();
+    });
+    $('#btn_NewAcc').click(function () {
+        var accno = document.getElementById('txtNew_Acc_No').value;
+        var accname = document.getElementById('txtNew_Acc_Name').value;
+        var laccname = document.getElementById('txtNew_LAcc_Name').value;
+        var notes = document.getElementById('txtNew_Acc_Desc').value;
+        var myval = js_insertAccount(coname, year, accno, accname, laccname, notes, current_Level);
+        if (myval !== 'OK') {
+            alert('خطا رخ داده است');
+            return
+        }
+        $('#MyModal_NewAccount').modal('hide');
+
+        var accno = '';
+        switch (current_Level) {
+            case 1:
+                accno = '';//document.getElementById('lbl_AccNo1').innerText;
+                break;
+            case 2:
+                accno = document.getElementById('lbl_AccNo1').innerText;
+                break;
+            case 3:
+                accno = document.getElementById('lbl_AccNo2').innerText;
+                break;
+            case 4:
+                accno = document.getElementById('lbl_AccNo3').innerText;
+                break;
+            case 5:
+                accno = document.getElementById('lbl_AccNo4').innerText;
+                break;
+            case 6:
+                accno = document.getElementById('lbl_AccNo5').innerText;
+                break;
+            case 7:
+                accno = document.getElementById('lbl_AccNo6').innerText;
+                break;
+            case 8:
+                accno = document.getElementById('lbl_AccNo7').innerText;
+                break;
+            case 9:
+                accno = document.getElementById('lbl_AccNo8').innerText;
+                break;
+        }
+        fill_DGV(accno, current_Level,'');
+    });
+    $('#btnNew').click(function () {
+        var accno = '';
+        switch (current_Level) {
+            case 1:
+                accno = '';//document.getElementById('lbl_AccNo1').innerText;
+                break;
+            case 2:
+                accno = document.getElementById('lbl_AccNo1').innerText;
+                break;
+            case 3:
+                accno = document.getElementById('lbl_AccNo2').innerText;
+                break;
+            case 4:
+                accno = document.getElementById('lbl_AccNo3').innerText;
+                break;
+            case 5:
+                accno = document.getElementById('lbl_AccNo4').innerText;
+                break;
+            case 6:
+                accno = document.getElementById('lbl_AccNo5').innerText;
+                break;
+            case 7:
+                accno = document.getElementById('lbl_AccNo6').innerText;
+                break;
+            case 8:
+                accno = document.getElementById('lbl_AccNo7').innerText;
+                break;
+            case 9:
+                accno = document.getElementById('lbl_AccNo8').innerText;
+                break;
+        }
+        var myval = js_getNewAccount(coname, year, accno, current_Level);
+        if (myval == 0) {
+            alert('در این سطح شما نمی توانید حساب جدید اضافه نمایید');
+            return
+        }
+        document.getElementById('txtNew_Acc_No').value = myval;
+        document.getElementById('txtNew_Acc_Name').value = '';
+        document.getElementById('txtNew_LAcc_Name').value = '';
+        document.getElementById('txtNew_Acc_Desc').value = '';
+
+        $('#MyModal_NewAccount').modal('show');
+    });
+    $('#btnSave').click(function () {
+        var AccNo = document.getElementById('txtAccNo').value;
+        var AccName = document.getElementById('txtAccName').value;
+        var LAccName = document.getElementById('txtLAccName').value;
+        var Notes = document.getElementById('txtNotes').value;
+
+        var Rem_Debit = document.getElementById('chkRem_Debit').checked;
+        var Rem_Credit = document.getElementById('chkRem_Credit').checked;
+        var Rem_Debit_All = document.getElementById('chkRem_Debit_All').checked;
+        var Rem_Credit_All = document.getElementById('chkRem_Credit_All').checked;
+
+        var Acc_Currency = document.getElementById('chkAcc_Currency').checked;
+        var Currency_Type = document.getElementById('cmbCurrency_Type').value;
+
+        var Balance = document.getElementById('chkBalance').checked;
+        var LoseProfit = document.getElementById('chkLoseProfit').checked;
+        var Other = document.getElementById('chkOther').checked;
+
+        var Active = document.getElementById('chkActive').checked;
+        var Last_Acc = document.getElementById('chkLast_Acc').checked;
+
+        var Cash = document.getElementById('chkCash').checked;
+        var Bank = document.getElementById('chkBank').checked;
+        var Product_Acc = document.getElementById('chkProduct_Acc').checked;
+        var POS = document.getElementById('chkPOS').checked;
+        var Raw_Acc = document.getElementById('chkRaw_Acc').checked;
+        var Packing_Acc = document.getElementById('chkPacking_Acc').checked;
+        var InBank = document.getElementById('chkInBank').checked;
+        var InProgress_Acc = document.getElementById('chkInProgress_Acc').checked;
+        var Payable_Acc = document.getElementById('chkPayable_Acc').checked;
+        var Supplies_Acc = document.getElementById('chkSupplies_Acc').checked;
+        var Tools_Acc = document.getElementById('chkTools_Acc').checked;
+        var Receivable_Acc = document.getElementById('chkReceivable_Acc').checked;
+        var Receivable_Return_Acc = document.getElementById('chkReceivable_Return_Acc').checked;
+        var Parts_Acc = document.getElementById('chkParts_Acc').checked;
+        var Expense = document.getElementById('chkExpense').checked;
+        var Other_Expense = document.getElementById('chkOther_Expense').checked;
+        var Asset_Acc = document.getElementById('chkAsset_Acc').checked;
+        var Pert_Acc = document.getElementById('chkPert_Acc').checked;
+        var Revenue = document.getElementById('chkRevenue').checked;
+        var Other_Revenue = document.getElementById('chkOther_Revenue').checked;
+        var Deposit_Other_Acc = document.getElementById('chkDeposit_Other_Acc').checked;
+        var Purchase = document.getElementById('chkPurchase').checked;
+        var Sales = document.getElementById('chkSales').checked;
+        var Purchase_Discount = document.getElementById('chkPurchase_Discount').checked;
+        var Sales_Discount = document.getElementById('chkSales_Discount').checked;
+        var Cost_Basis = document.getElementById('chkCost_Basis').checked;
+        var ReturnPurchase = document.getElementById('chkReturnPurchase').checked;
+        var ReturnSales = document.getElementById('chkReturnSales').checked;
+        var Cost_BasisP = document.getElementById('chkCost_BasisP').checked;
+        var Purchase_Variance = document.getElementById('chkPurchase_Variance').checked;
+        var CostsProduct = document.getElementById('chkCostsProduct').checked;
+        var Consume_Variance = document.getElementById('chkConsume_Variance').checked;
+        var Loss_Profit = document.getElementById('chkLoss_Profit').checked;
+        var Tolls = document.getElementById('chkTolls').checked;
+        var Tolls_Cost = document.getElementById('chkTolls_Cost').checked;
+        var Open_Acc = document.getElementById('chkOpen_Acc').checked;
+        var VAT = document.getElementById('chkVAT').checked;
+        var VATP = document.getElementById('chkVATP').checked;
+        var Close_Acc = document.getElementById('chkClose_Acc').checked;
+        var Profit_Ghesti = document.getElementById('chkProfit_Ghesti').checked;
+        var Customer = document.getElementById('chkCustomer').checked;
+        var Visitor = document.getElementById('chkVisitor').checked;
+        var Acc_Store = document.getElementById('chkAcc_Store').checked;
+        var Acc_Sales = document.getElementById('chkAcc_Sales').checked;
+        var Acc_PayRecv = document.getElementById('chkAcc_PayRecv').checked;
+        var Acc_PayRoll = document.getElementById('chkPayRoll').checked;
+        var tableRef = document.getElementById('myAccountTable').getElementsByTagName('tbody')[0];
+        var old_AccNo = tableRef.rows[selected_row].cells[0].innerText;
+
+        if (Currency_Type == '---' || Acc_Currency == false) { Currency_Type = '';}
+
+        var myVal = js_updateAccount(coname, year, old_AccNo, AccNo, AccName, LAccName, Cash, POS, Sales, ReturnSales, Purchase, ReturnPurchase,
+            Revenue, Expense, Bank, InBank, Other_Revenue, Other_Expense, Sales_Discount, Purchase_Discount, Purchase_Variance, Consume_Variance,
+            Customer, Visitor, Receivable_Acc, Receivable_Return_Acc, Payable_Acc, Product_Acc, Raw_Acc, InProgress_Acc, Supplies_Acc,
+            Parts_Acc, '', Asset_Acc, Pert_Acc, Packing_Acc, Deposit_Other_Acc, Open_Acc, Close_Acc, LoseProfit, Cost_Basis, Cost_BasisP,
+            CostsProduct, Tolls, Tolls_Cost, VAT, VATP, Profit_Ghesti, Last_Acc, Rem_Debit, Rem_Credit, Rem_Debit_All, Rem_Credit_All,
+            Balance, Loss_Profit, Other, Active, Acc_Store, Acc_Sales, Acc_PayRecv, Acc_PayRoll, Acc_Currency,
+            '', Currency_Type, Notes);
+
+        if (myVal != 'OK') {
+            alert(myVal);
+        } else {
+            alert('اطلاعات ذخیره شد');
+        }
+
+    });
+    $('#btnDel').click(function () {
+        var tableRef = document.getElementById('myAccountTable').getElementsByTagName('tbody')[0];
+        var checked_TurnOverAcc = false;
+        var checked_LastAccAcc = document.getElementById('chkLast_Acc').checked;
+        var acc_no = tableRef.rows[selected_row].cells[0].innerText;
+        var getVal = js_CheckTurnOverAcc(coname, year, acc_no);
+        getVal = JSON.parse(getVal);
+        checked_TurnOverAcc = getVal.checked;
+
+        var result = '';
+
+        if (confirm('حذف حساب فوق را تایید میکنید؟')) {
+            if (checked_LastAccAcc) {
+                if (confirm('حساب فوق دارای گردش می باشد. \n آیا مایل به حذف حساب و کلیه گردشهای این حساب در کلیه سیستم های حسابداری ، انبار و دریافت و پرداخت می باشدی ؟')) {
+                    result = js_DeleteAccounts(coname, year, acc_no);
+                    if (result != '0') {
+                        var accno = '';
+                        switch (current_Level) {
+                            case 1:
+                                accno = '';//document.getElementById('lbl_AccNo1').innerText;
+                                break;
+                            case 2:
+                                accno = document.getElementById('lbl_AccNo1').innerText;
+                                break;
+                            case 3:
+                                accno = document.getElementById('lbl_AccNo2').innerText;
+                                break;
+                            case 4:
+                                accno = document.getElementById('lbl_AccNo3').innerText;
+                                break;
+                            case 5:
+                                accno = document.getElementById('lbl_AccNo4').innerText;
+                                break;
+                            case 6:
+                                accno = document.getElementById('lbl_AccNo5').innerText;
+                                break;
+                            case 7:
+                                accno = document.getElementById('lbl_AccNo6').innerText;
+                                break;
+                            case 8:
+                                accno = document.getElementById('lbl_AccNo7').innerText;
+                                break;
+                            case 9:
+                                accno = document.getElementById('lbl_AccNo8').innerText;
+                                break;
+                        }
+                        fill_DGV(accno, current_Level,'');
+                    } else {
+                        alert('حذف حساب امکان پذیر نمی باشد.');
+                    }
+                }
+            }else
+            {
+                alert('حساب فوق در سطح پایینتر دارای زیر حساب می باشد');
+                if (confirm('با حذف زیر حسابهایی که در اسناد دارای گردش می باشند، کلیه گردش آنها نیز حذف خواد شد. آیا کلیه زیر حسابهای این حساب حذف گردد؟')) {
+                    result = js_DeleteAccounts(coname, year, acc_no);
+                    if (result != '0') {
+                        var accno = '';
+                        switch (current_Level) {
+                            case 1:
+                                accno = '';//document.getElementById('lbl_AccNo1').innerText;
+                                break;
+                            case 2:
+                                accno = document.getElementById('lbl_AccNo1').innerText;
+                                break;
+                            case 3:
+                                accno = document.getElementById('lbl_AccNo2').innerText;
+                                break;
+                            case 4:
+                                accno = document.getElementById('lbl_AccNo3').innerText;
+                                break;
+                            case 5:
+                                accno = document.getElementById('lbl_AccNo4').innerText;
+                                break;
+                            case 6:
+                                accno = document.getElementById('lbl_AccNo5').innerText;
+                                break;
+                            case 7:
+                                accno = document.getElementById('lbl_AccNo6').innerText;
+                                break;
+                            case 8:
+                                accno = document.getElementById('lbl_AccNo7').innerText;
+                                break;
+                            case 9:
+                                accno = document.getElementById('lbl_AccNo8').innerText;
+                                break;
+                        }
+                        fill_DGV(accno, current_Level,'');
+                    } else {
+                        alert('حذف حساب امکان پذیر نمی باشد.');
+                    }
+                }
+            }
+        }
+
+    });
+    $('#btnTurnOver').click(function () {
+        document.getElementById('lblDebit').innerText = '';
+        document.getElementById('lblCredit').innerText = '';
+        document.getElementById('lblRem').innerText = '';
+
+        var tableRef = document.getElementById('myAccountTable').getElementsByTagName('tbody')[0];
+        var sumdebit = 0;
+        var sumcredit = 0;
+        var rem = 0;
+        var acc_no = tableRef.rows[selected_row].cells[0].innerText;
+        var getVal = js_getTurnOverAcc(coname, year, acc_no);
+        myjs = JSON.parse(getVal);
+        sumdebit = myjs.sumdebit;
+        sumcredit = myjs.sumcredit;
+        rem = myjs.rem;
+
+        document.getElementById('lblDebit').innerText = parseInt(sumdebit).format();
+        document.getElementById('lblCredit').innerText = parseInt(sumcredit).format();
+        document.getElementById('lblRem').innerText = parseInt(rem).format();
+
+        $('#MyModal_TurnOver').modal('show');
+    });
+    $('#btnReload').click(function () {
+        refreshPage();
+    });
+    $('#btnClose').click(function () {
+        window.close();
+    });
+    $('#btnSearch').click(function () {
+        $('#s_Acc_No').val('');
+        $('#s_Acc_Name').val('');
+        $('#s_LAcc_Name').val('');
+        $('#sRem_Debit').prop('checked', false);
+        $('#sRem_Credit').prop('checked', false);
+        $('#sRem_Debit_All').prop('checked', false);
+        $('#sRem_Credit_All').prop('checked', false);
+        $('#sAcc_Currency').prop('checked', false);
+        document.getElementById("scmbCurrency_Type").value = 0;
+        $('#sBalance').prop('checked', false);
+        $('#sLoseProfit').prop('checked', false);
+        $('#sOther').prop('checked', false);
+        $('#sActive').prop('checked', false);
+        $('#sLast_Acc').prop('checked', false);
+        $('#sCash').prop('checked',false);
+        $('#sBank').prop('checked', false);
+        $('#sProduct_Acc').prop('checked', false);
+        $('#sPOS').prop('checked', false);
+        $('#sRaw_Acc').prop('checked', false);
+        $('#sPacking_Acc').prop('checked', false);
+        $('#sInBank').prop('checked', false);
+        $('#sInProgress_Acc').prop('checked', false);
+        $('#sPayable_Acc').prop('checked', false);
+        $('#sSupplies_Acc').prop('checked', false);
+        $('#sTools_Acc').prop('checked', false);
+        $('#sReceivable_Acc').prop('checked', false);
+        $('#sReceivable_Return_Acc').prop('checked', false);
+        $('#sParts_Acc').prop('checked', false);
+        $('#sExpense').prop('checked', false);
+        $('#sOther_Expense').prop('checked', false);
+        $('#sAsset_Acc').prop('checked', false);
+        $('#sPert_Acc').prop('checked', false);  
+        $('#sRevenue').prop('checked', false);   
+        $('#sOther_Revenue').prop('checked', false);
+        $('#sDeposit_Other_Acc').prop('checked', false);
+        $('#sPurchase').prop('checked', false);
+        $('#sSales').prop('checked', false);
+        $('#sPurchase_Discount').prop('checked', false);
+        $('#sSales_Discount').prop('checked', false);
+        $('#sCost_Basis').prop('checked', false);
+        $('#sReturnPurchase').prop('checked', false);
+        $('#sReturnSales').prop('checked', false);
+        $('#sCost_BasisP').prop('checked', false);
+        $('#sPurchase_Variance').prop('checked', false);
+        $('#sCostsProduct').prop('checked', false);
+        $('#sConsume_Variance').prop('checked', false);
+        $('#sLoss_Profit').prop('checked', false);
+        $('#sTolls').prop('checked', false);
+        $('#sTolls_Cost').prop('checked', false);
+        $('#sOpen_Acc').prop('checked', false);
+        $('#sVAT').prop('checked', false);
+        $('#sVATP').prop('checked', false);
+        $('#sClose_Acc').prop('checked', false);
+        $('#sProfit_Ghesti').prop('checked', false);
+        $('#sCustomer').prop('checked', false);
+        $('#sVisitor').prop('checked', false);
+        $('#sAcc_Store').prop('checked', false);
+        $('#sAcc_Sales').prop('checked', false);
+        $('#sAcc_PayRecv').prop('checked', false);
+        $('#sPayRoll').prop('checked', false);
+
+        $('#MyModal_SearchAccounts').modal('show');
+    });
+    $('#btnDOSearch').click(function () {
+        $('#MyModal_SearchResult').modal('show');
+        var w = '';
+        if ($('#s_Acc_No').val() != '') w += ' AND Acc_No LIKE N\'%' + $('#s_Acc_No').val() + '%\' ';
+        if ($('#s_Acc_Name').val() != '') w += ' AND Acc_Name LIKE N\'%' + $('#s_Acc_Name').val() + '%\' ';
+        if ($('#s_LAcc_Name').val() != '') w += ' AND LAcc_Name LIKE N\'%' + $('#s_LAcc_Name').val() + '%\' ';
+        if ($('#sRem_Debit').is(':checked')) w += ' AND Rem_Debit  = \'' + $('#sRem_Debit').is(':checked') + '\'';
+        if ($('#sRem_Credit').is(':checked')) w += ' AND Rem_Credit = \'' + $('#sRem_Credit').is(':checked') + '\'';
+        if ($('#sRem_Debit_All').is(':checked')) w += ' AND Rem_Debit_All = \'' + $('#sRem_Debit_All').is(':checked') + '\'';
+        if ($('#sRem_Credit_All').is(':checked')) w += ' AND Rem_Credit_All = \'' + $('#sRem_Credit_All').is(':checked') + '\'';
+
+        if ($('#sAcc_Currency').is(':checked')) w += ' AND Acc_Currency = \'' + $('#sAcc_Currency').is(':checked') + '\'';
+        if (document.getElementById("scmbCurrency_Type").value != 0) w += ' AND Currency_Type = \'' + $('#scmbCurrency_Type').value + '\'';
+
+        if ($('#sBalance').is(':checked')) w += ' AND Balance = \'' + $('#sBalance').is(':checked') + '\'';
+        if ($('#sLoseProfit').is(':checked')) w += ' AND LoseProfit = \'' + $('#sLoseProfit').is(':checked') + '\'';
+        if ($('#sOther').is(':checked')) w += ' AND Other = \'' + $('#sOther').is(':checked') + '\'';
+
+        if ($('#sActive').is(':checked')) w += ' AND Active = \'' + $('#sActive').is(':checked') + '\'';
+        if ($('#sLast_Acc').is(':checked')) w += ' AND Last_Acc = \'' + $('#sLast_Acc').is(':checked') + '\'';
+        
+        if ($('#sCash').is(':checked')) w += ' AND Cash = \'' + $('#sCash').is(':checked') + '\'';
+        if ($('#sBank').is(':checked')) w += ' AND Bank = \'' + $('#sBank').is(':checked') + '\'';
+        if ($('#sProduct_Acc').is(':checked')) w += ' AND Product_Acc = \'' + $('#sProduct_Acc').is(':checked') + '\'';
+        if ($('#sPOS').is(':checked')) w += ' AND POS = \'' + $('#sPOS').is(':checked') + '\'';
+        if ($('#sRaw_Acc').is(':checked')) w += ' AND Raw_Acc = \'' + $('#sRaw_Acc').is(':checked') + '\'';
+        if ($('#sPacking_Acc').is(':checked')) w += ' AND Packing_Acc = \'' + $('#sPacking_Acc').is(':checked') + '\'';
+        if ($('#sInBank').is(':checked')) w += ' AND InBank = \'' + $('#sInBank').is(':checked') + '\'';
+        if ($('#sInProgress_Acc').is(':checked')) w += ' AND InProgress_Acc = \'' + $('#sInProgress_Acc').is(':checked') + '\'';
+        if ($('#sPayable_Acc').is(':checked')) w += ' AND Payable_Acc = \'' + $('#sPayable_Acc').is(':checked') + '\'';
+        if ($('#sSupplies_Acc').is(':checked')) w += ' AND Supplies_Acc = \'' + $('#sSupplies_Acc').is(':checked') + '\'';
+        if ($('#sTools_Acc').is(':checked')) w += ' AND Tools_Acc = \'' + $('#sTools_Acc').is(':checked') + '\'';
+        if ($('#sReceivable_Acc').is(':checked')) w += ' AND Receivable_Acc = \'' + $('#sReceivable_Acc').is(':checked') + '\'';
+        if ($('#sReceivable_Return_Acc').is(':checked')) w += ' AND Receivable_Return_Acc = \'' + $('#sReceivable_Return_Acc').is(':checked') + '\'';
+        if ($('#sParts_Acc').is(':checked')) w += ' AND Parts_Acc = \'' + $('#sParts_Acc').is(':checked') + '\'';
+        if ($('#sExpense').is(':checked')) w += ' AND Expense = \'' + $('#sExpense').is(':checked') + '\'';
+        if ($('#sOther_Expense').is(':checked')) w += ' AND Other_Expense = \'' + $('#sOther_Expense').is(':checked') + '\'';
+        if ($('#sAsset_Acc').is(':checked')) w += ' AND Asset_Acc = \'' + $('#sAsset_Acc').is(':checked') + '\'';
+        if ($('#sPert_Acc').is(':checked')) w += ' AND Pert_Acc = \'' + $('#sPert_Acc').is(':checked') + '\'';
+        if ($('#sRevenue').is(':checked')) w += ' AND Revenue = \'' + $('#sRevenue').is(':checked') + '\'';
+        if ($('#sOther_Revenue').is(':checked')) w += ' AND Other_Revenue = \'' + $('#sOther_Revenue').is(':checked') + '\'';
+        if ($('#sDeposit_Other_Acc').is(':checked')) w += ' AND Deposit_Other_Acc = \'' + $('#sDeposit_Other_Acc').is(':checked') + '\'';
+        if ($('#sPurchase').is(':checked')) w += ' AND Purchase = \'' + $('#sPurchase').is(':checked') + '\'';
+        if ($('#sSales').is(':checked')) w += ' AND Sales = \'' + $('#sSales').is(':checked') + '\'';
+        if ($('#sPurchase_Discount').is(':checked')) w += ' AND Purchase_Discount = \'' + $('#sPurchase_Discount').is(':checked') + '\'';
+        if ($('#sSales_Discount').is(':checked')) w += ' AND Sales_Discount = \'' + $('#sSales_Discount').is(':checked') + '\'';
+        if ($('#sCost_Basis').is(':checked')) w += ' AND Cost_Basis = \'' + $('#sCost_Basis').is(':checked') + '\'';
+        if ($('#sReturnPurchase').is(':checked')) w += ' AND ReturnPurchase = \'' + $('#sReturnPurchase').is(':checked') + '\'';
+        if ($('#sReturnSales').is(':checked')) w += ' AND ReturnSales = \'' + $('#sReturnSales').is(':checked') + '\'';
+        if ($('#sCost_BasisP').is(':checked')) w += ' AND Cost_BasisP = \'' + $('#sCost_BasisP').is(':checked') + '\'';
+        if ($('#sPurchase_Variance').is(':checked')) w += ' AND Purchase_Variance = \'' + $('#sPurchase_Variance').is(':checked') + '\'';
+        if ($('#sCostsProduct').is(':checked')) w += ' AND CostsProduct = \'' + $('#sCostsProduct').is(':checked') + '\'';
+        if ($('#sConsume_Variance').is(':checked')) w += ' AND Consume_Variance = \'' + $('#sConsume_Variance').is(':checked') + '\'';
+        if ($('#sLoss_Profit').is(':checked')) w += ' AND Loss_Profit = \'' + $('#sLoss_Profit').is(':checked') + '\'';
+        if ($('#sTolls').is(':checked')) w += ' AND Tolls = \'' + $('#sTolls').is(':checked') + '\'';
+        if ($('#sTolls_Cost').is(':checked')) w += ' AND Tolls_Cost = \'' + $('#sTolls_Cost').is(':checked') + '\'';
+        if ($('#sOpen_Acc').is(':checked')) w += ' AND Open_Acc = \'' + $('#sOpen_Acc').is(':checked') + '\'';
+        if ($('#sVAT').is(':checked')) w += ' AND VAT = \'' + $('#sVAT').is(':checked') + '\'';
+        if ($('#sVATP').is(':checked')) w += ' AND VATP = \'' + $('#sVATP').is(':checked') + '\'';
+        if ($('#sClose_Acc').is(':checked')) w += ' AND Close_Acc = \'' + $('#sClose_Acc').is(':checked') + '\'';
+        if ($('#sProfit_Ghesti').is(':checked')) w += ' AND Profit_Ghesti = \'' + $('#sProfit_Ghesti').is(':checked') + '\'';
+        if ($('#sCustomer').is(':checked')) w += ' AND Customer = \'' + $('#sCustomer').is(':checked') + '\'';
+        if ($('#sVisitor').is(':checked')) w += ' AND Visitor = \'' + $('#sVisitor').is(':checked') + '\'';
+        if ($('#sAcc_Store').is(':checked')) w += ' AND Acc_Store = \'' + $('#sAcc_Store').is(':checked') + '\'';
+        if ($('#sAcc_Sales').is(':checked')) w += ' AND Acc_Sales = \'' + $('#sAcc_Sales').is(':checked') + '\'';
+        if ($('#sAcc_PayRecv').is(':checked')) w += ' AND Acc_PayRecv = \'' + $('#sAcc_PayRecv').is(':checked') + '\'';
+        if ($('#sPayRoll').is(':checked')) w += ' AND PayRoll = \'' + $('#sPayRoll').is(':checked') + '\'';
+
+        var myVal = js_searchAcc_(coname, year, w);
+        var tableRef = document.getElementById('mySearchResultTable').getElementsByTagName('tbody')[0];
+        var count = tableRef.rows.length;
+        while (count != 0) {
+            tableRef.rows[0].remove();
+            count = tableRef.rows.length;
+        }
+
+        for (var x = 0; x < myVal.length; x++) {
+            // Insert a row in the table at the last row
+            var newRow = tableRef.insertRow(tableRef.rows.length);
+
+            // Insert a cell in the row at index 0
+            var newCell1 = newRow.insertCell(0);
+            var newCell2 = newRow.insertCell(1);
+
+            var newText = document.createTextNode(myVal[x].Acc_No);
+            newCell1.style.width = '100px';
+            newCell1.appendChild(newText);
+
+            newText = document.createTextNode(myVal[x].Acc_Name);
+            newCell2.style.width = '300px';
+            newCell2.appendChild(newText);
+
+            newRow.ondblclick = function dblclick() {
+                mydbClickRow_Search(this);
+            }
+            //newRow.addEventListener('dblclick', mydbClickRow_Search(this), false);
+            //newRow.addEventListener('click', myClickRow, false);
+        }
+    });
+    $('#chkLast_Acc').change(function () {
+        ev_LastAcc(this);
+    });
+
+    function ev_LastAcc(x) {
+        if (accEdition > 1) {
+            var check = $(x).is(':checked');
+            if (check) {
+                document.getElementById('GroupsTafsil').style.display = '';
+                var l1;
+                var l2;
+                var l3;
+                if (accEdition > 1) {
+                    l1 = document.getElementById('Lev1').getElementsByTagName('tbody')[0];
+                }
+                if (accEdition == 3) {
+                    l2 = document.getElementById('Lev2').getElementsByTagName('tbody')[0];
+                    l3 = document.getElementById('Lev3').getElementsByTagName('tbody')[0];
+                }
+                var count = l1.rows.length;
+                var accno = document.getElementById('txtAccNo').value;
+                var myVal = js_get_GNO_Tafsil(coname, year, accno);
+                for (var i = 0; i < myVal.length; i++) {
+                    for (var j = 0; j < count; j++) {
+                        var c = 0;
+                        var r = j;
+                        try {
+                            if (myVal[i].No_Tafsil == 1) {
+                                var chk = l1.rows[r].cells[0].children.item(0);
+                                if (chk.value == myVal[i].G_No) {
+                                    chk.checked = true;
+                                }
+                            }
+                        }
+                        catch (err) {
+
+                        }
+                        try {
+                            if (myVal[i].No_Tafsil == 2) {
+                                var chk = l2.rows[r].cells[0].children.item(0);
+                                if (chk.value == myVal[i].G_No) {
+                                    chk.checked = true;
+                                }
+                            }
+                        }
+                        catch (err) {
+
+                        }
+                        try {
+                            if (myVal[i].No_Tafsil == 3) {
+                                var chk = l3.rows[r].cells[0].children.item(0);
+                                if (chk.value == myVal[i].G_No) {
+                                    chk.checked = true;
+                                }
+                            }
+                        }
+                        catch (err) {
+
+                        }
+                    }
+                }
+            } else {
+                document.getElementById('GroupsTafsil').style.display = 'none';
+            }
+        }
+    }
+    function beforeLevel() {
+        //document.getElementById('btnSave').setAttribute('disabled', true);
+        //document.getElementById('btnDel').removeAttribute('disabled');
+        if (current_Level - 1 == 1) {
+            document.getElementById('btnBeforeLevel').setAttribute('disabled', true);
+            document.getElementById('btnNextLevel').removeAttribute('disabled');
+        } else {
+            document.getElementById('btnBeforeLevel').removeAttribute('disabled');
+            document.getElementById('btnNextLevel').removeAttribute('disabled');
+        }
+
+
+        var acc_no = '';
+        switch (current_Level) {
+            case 2:
+                acc_no = '';//document.getElementById('lbl_AccNo1').innerText;
+                break;
+            case 3:
+                acc_no = document.getElementById('lbl_AccNo1').innerText;
+                break;
+            case 4:
+                acc_no = document.getElementById('lbl_AccNo2').innerText;
+                break;
+            case 5:
+                acc_no = document.getElementById('lbl_AccNo3').innerText;
+                break;
+            case 6:
+                acc_no = document.getElementById('lbl_AccNo4').innerText;
+                break;
+            case 7:
+                acc_no = document.getElementById('lbl_AccNo5').innerText;
+                break;
+            case 8:
+                acc_no = document.getElementById('lbl_AccNo6').innerText;
+                break;
+            case 9:
+                acc_no = document.getElementById('lbl_AccNo7').innerText;
+                break;
+        }
+
+        current_Level -= 1;
+        fill_DGV(acc_no, current_Level,'');
+    }
+    function nextLevel() {
+        if (current_Level == Acc_Levels) {
+            return;
+        }
+        if (current_Level + 1 < Acc_Levels) {
+            document.getElementById('btnBeforeLevel').removeAttribute('disabled');
+            document.getElementById('btnNextLevel').removeAttribute('disabled');
+        } else
+            document.getElementById('btnNextLevel').setAttribute('disabled', true);
+
+        var tableRef = document.getElementById('myAccountTable').getElementsByTagName('tbody')[0];
+        var acc_no = tableRef.rows[selected_row].cells[0].innerText;
+
+        current_Level += 1;
+        fill_DGV(acc_no, current_Level,'');
+    }
+    function fill_DGV(Account,Level,selectAcc) {
+        var myVal = js_getAccountInLevel(coname, year, Account, Level);
+        //var tableRef = document.getElementById('tbAccount');
+        var tableRef = document.getElementById('myAccountTable').getElementsByTagName('tbody')[0];
+        var count = tableRef.rows.length;
+        while (count != 0) {
+            tableRef.rows[0].remove();
+            count = tableRef.rows.length;
+        }
+
+        for (var x = 0; x < myVal.length; x++) {
+            // Insert a row in the table at the last row
+            var newRow = tableRef.insertRow(tableRef.rows.length);
+
+            // Insert a cell in the row at index 0
+            var newCell1 = newRow.insertCell(0);
+            var newCell2 = newRow.insertCell(1);
+
+            var newText = document.createTextNode(myVal[x].Acc_No);
+            newCell1.style.width = '87px';
+            newCell1.appendChild(newText);
+
+            newText = document.createTextNode(myVal[x].Acc_Name);
+            newCell2.style.width = '220px';
+            newCell2.appendChild(newText);
+
+
+            newRow.addEventListener('dblclick', mydbClickRow, false);
+            newRow.addEventListener('click', myClickRow, false);
+        }
+
+
+        var tableRefBody = document.getElementById('tbAccount');
+        var count = tableRefBody.rows.length;
+
+        if (count > 0) {
+            first_Load = true;
+            var First_Row = tableRef.rows[0];
+            mySelectRow(First_Row);
+            if (selectAcc != '')
+            {
+                for (var i = 0; i < count; i++) {
+                    var a = tableRef.rows[i].cells[0].innerText;
+                    if (a == selectAcc) {
+                        var r = tableRef.rows[i];
+                        mySelectRow(r);
+                    }
+                }
+            }
+        }
+    }
+    function fill_Tafsil_Group() {
+        if (accEdition > 1) {
+            var myVal = js_getTafsilGroup(coname, year, '');
+            var l1 = document.getElementById('Lev1').getElementsByTagName('tbody')[0];
+            var l2 = document.getElementById('Lev2').getElementsByTagName('tbody')[0];
+            var l3 = document.getElementById('Lev3').getElementsByTagName('tbody')[0];
+            var count = l1.rows.length;
+            while (count != 0) {
+                l1.rows[0].remove();
+                l2.rows[0].remove();
+                l3.rows[0].remove();
+                count = l1.rows.length;
+            }
+            for (var x = 0; x < myVal.length; x++) {
+                // Insert a row in the table at the last row
+                var newRow1 = l1.insertRow(l1.rows.length - 1);
+                var newRow2 = l2.insertRow(l2.rows.length - 1);
+                var newRow3 = l3.insertRow(l3.rows.length - 1);
+
+                // Insert a cell in the row at index 0
+                var newCell11 = newRow1.insertCell(0);
+                var newCell12 = newRow1.insertCell(1);
+                var newCell21 = newRow2.insertCell(0);
+                var newCell22 = newRow2.insertCell(1);
+                var newCell31 = newRow3.insertCell(0);
+                var newCell32 = newRow3.insertCell(1);
+
+                var Node1 = document.createElement('input');
+                Node1.type = 'checkbox';
+                Node1.innerText = '1';
+                Node1.value = myVal[x].G_No
+                Node1.onchange = function Node_chanege() {
+                    myGchanged(this);
+                }
+
+                var Node2 = document.createElement('input');
+                Node2.type = 'checkbox';
+                Node2.innerText = '2';
+                Node2.value = myVal[x].G_No
+                Node2.onchange = function Node_chanege() {
+                    myGchanged(this);
+                }
+
+                var Node3 = document.createElement('input');
+                Node3.type = 'checkbox';
+                Node3.innerText = '3';
+                Node3.value = myVal[x].G_No;
+                Node3.onchange = function Node_chanege() {
+                    myGchanged(this);
+                }
+
+                var newText1 = document.createTextNode(myVal[x].G_Name);
+                var newText2 = document.createTextNode(myVal[x].G_Name);
+                var newText3 = document.createTextNode(myVal[x].G_Name);
+
+                newCell11.appendChild(Node1);
+                newCell12.appendChild(newText1);
+
+                newCell21.appendChild(Node2);
+                newCell22.appendChild(newText2);
+
+                newCell31.appendChild(Node3);
+                newCell32.appendChild(newText3);
+            }
+        }
+    }
+    function fill_Tafsil_Group(lev,num) {
+        var myVal = js_getTafsilGroup(coname, year, '');
+        var l1 = document.getElementById(lev).getElementsByTagName('tbody')[0];
+        var count = l1.rows.length;
+        while (count != 0) {
+            l1.rows[0].remove();
+            count = l1.rows.length;
+        }
+        for (var x = 0; x < myVal.length; x++) {
+            // Insert a row in the table at the last row
+            var newRow1 = l1.insertRow(l1.rows.length - 1);
+
+            // Insert a cell in the row at index 0
+            var newCell1 = newRow1.insertCell(0);
+            var newCell2 = newRow1.insertCell(1);
+
+
+            var Node1 = document.createElement('input');
+            Node1.type = 'checkbox';
+            Node1.innerText = num;
+            Node1.value = myVal[x].G_No
+            Node1.onchange = function Node_chanege() {
+                myGchanged(this);
+            }
+
+            var newText1 = document.createTextNode(myVal[x].G_Name);
+
+            newCell1.appendChild(Node1);
+            newCell2.appendChild(newText1);
+        }
+    }
+    function myGchanged(x) {
+        var G_No = $(x).val();
+        var G_type = $(x).text();
+        var G_check = $(x).is(':checked');
+        var acc_no = document.getElementById('txtAccNo').value;
+        if (G_check) {
+            var getVal = js_insertAccTafsil(coname, year, acc_no, G_No, G_type);
+            if (getVal == 'OK') {
+
+            } else {
+                alert(getVal);
+            }
+        } else {
+            var getVal = js_deleteAccTafsil(coname, year, acc_no, G_No, G_type);
+            if (getVal == 'OK') {
+
+            } else {
+                alert(getVal);
+            }
+        }
+    }
+    function mydbClickRow() {
+        var tableRef = document.getElementById('myAccountTable').getElementsByTagName('tbody')[0];
+        $(this).addClass('selected').siblings().removeClass('selected');
+        selected_row = $(this).index();
+        nextLevel();
+    }
+    function mydbClickRow_Search(x) {
+        var tableRef = document.getElementById('mySearchResultTable').getElementsByTagName('tbody')[0];
+        //$(this).addClass('selected').siblings().removeClass('selected');
+        //selected_row = $(this).index();
+        //nextLevel();
+        var r = $(x).index();
+        //alert(tableRef.rows[r].cells[0].innerText);
+        var accno = tableRef.rows[r].cells[0].innerText;
+        var acclen = accno.length;
+        var alevels = [''];
+        var levcount = 0;
+        var x = Levels_Len[0];
+        for (var i = 1; i <= acclen; i++) {
+            var a = accno.substring(0, i);
+            if (x == a.length) {
+                alevels.push(a);
+                x += Levels_Len[(i + 1) - 1];
+                levcount += 1;
+                document.getElementById('lbl_LevelName' + levcount).innerText = Levels_Name[levcount - 1];
+                document.getElementById('TitleLevel').innerText = Levels_Name[levcount - 1];
+                document.getElementById('lbl_AccNo' + levcount).innerText = a;
+                document.getElementById('lbl_AccName' + levcount).innerText = js_get_AccName(coname, year, a);
+                current_Level = levcount;
+            }
+        }
+        fill_DGV(alevels[current_Level -1], current_Level,accno);
+        //before btn
+        if (current_Level == 1) 
+            document.getElementById('btnBeforeLevel').setAttribute('disabled', true);
+        else 
+            document.getElementById('btnBeforeLevel').removeAttribute('disabled');
+        
+        //next btn
+        if (current_Level == Acc_Levels) 
+            document.getElementById('btnNextLevel').setAttribute('disabled', true);
+        else
+            document.getElementById('btnNextLevel').removeAttribute('disabled');
+
+        $('#MyModal_SearchAccounts').modal('hide');
+        $('#MyModal_SearchResult').modal('hide');
+    }
+    function myClickRow() {
+        mySelectRow(this);
+
+    }
+    function mySelectRow(x) {
+        var tableRef = document.getElementById('myAccountTable').getElementsByTagName('tbody')[0];
+        $(x).addClass('selected').siblings().removeClass('selected');
+        //if (selected_row == $(x).index())
+        //    return;
+        selected_row = $(x).index();
+        var acc_no = tableRef.rows[selected_row].cells[0].innerText;
+        var acc_name = tableRef.rows[selected_row].cells[1].innerText;
+        switch (current_Level) {
+            case 1:
+                document.getElementById('lbl_LevelName1').innerText = levelName1;
+                document.getElementById('TitleLevel').innerText = levelName1;
+                document.getElementById('lbl_AccNo1').innerText = acc_no;
+                document.getElementById('lbl_AccName1').innerText = acc_name;
+                break;
+            case 2:
+                document.getElementById('lbl_LevelName2').innerText = levelName2;
+                document.getElementById('TitleLevel').innerText = levelName2;
+                document.getElementById('lbl_AccNo2').innerText = acc_no;
+                document.getElementById('lbl_AccName2').innerText = acc_name;
+                break;
+            case 3:
+                document.getElementById('lbl_LevelName3').innerText = levelName3;
+                document.getElementById('TitleLevel').innerText = levelName3;
+                document.getElementById('lbl_AccNo3').innerText = acc_no;
+                document.getElementById('lbl_AccName3').innerText = acc_name;
+                break;
+            case 4:
+                document.getElementById('lbl_LevelName4').innerText = levelName4;
+                document.getElementById('TitleLevel').innerText = levelName4;
+                document.getElementById('lbl_AccNo4').innerText = acc_no;
+                document.getElementById('lbl_AccName4').innerText = acc_name;
+                break;
+            case 5:
+                document.getElementById('lbl_LevelName5').innerText = levelName5;
+                document.getElementById('TitleLevel').innerText = levelName5;
+                document.getElementById('lbl_AccNo5').innerText = acc_no;
+                document.getElementById('lbl_AccName5').innerText = acc_name;
+                break;
+            case 6:
+                document.getElementById('lbl_LevelName6').innerText = levelName6;
+                document.getElementById('TitleLevel').innerText = levelName6;
+                document.getElementById('lbl_AccNo6').innerText = acc_no;
+                document.getElementById('lbl_AccName6').innerText = acc_name;
+                break;
+            case 7:
+                document.getElementById('lbl_LevelName7').innerText = levelName7;
+                document.getElementById('TitleLevel').innerText = levelName7;
+                document.getElementById('lbl_AccNo7').innerText = acc_no;
+                document.getElementById('lbl_AccName7').innerText = acc_name;
+                break;
+            case 8:
+                document.getElementById('lbl_LevelName8').innerText = levelName8;
+                document.getElementById('TitleLevel').innerText = levelName8;
+                document.getElementById('lbl_AccNo8').innerText = acc_no;
+                document.getElementById('lbl_AccName8').innerText = acc_name;
+                break;
+            case 9:
+                document.getElementById('lbl_LevelName9').innerText = levelName9;
+                document.getElementById('TitleLevel').innerText = levelName9;
+                document.getElementById('lbl_AccNo9').innerText = acc_no;
+                document.getElementById('lbl_AccName9').innerText = acc_name;
+                break;
+        }
+        showHideLevels();
+
+        var myVal = js_getAccountInfo(coname, year, acc_no);
+
+        for (var x = 0; x < myVal.length; x++) {
+            document.getElementById('txtAccNo').value = myVal[x].Acc_No;
+            document.getElementById('txtAccName').value = myVal[x].Acc_Name;
+            document.getElementById('txtLAccName').value = myVal[x].LAcc_Name;
+            document.getElementById('txtNotes').value = myVal[x].Notes;
+
+            document.getElementById('chkRem_Debit').checked = myVal[x].Rem_Debit;
+            document.getElementById('chkRem_Credit').checked = myVal[x].Rem_Credit;
+            document.getElementById('chkRem_Debit_All').checked = myVal[x].Rem_Debit_All;
+            document.getElementById('chkRem_Credit_All').checked = myVal[x].Rem_Credit_All;
+
+            document.getElementById('chkAcc_Currency').checked = myVal[x].Acc_Currency;
+            document.getElementById('cmbCurrency_Type').value = myVal[x].Currency_Type;
+
+            document.getElementById('chkBalance').checked = myVal[x].Balance;
+            document.getElementById('chkLoseProfit').checked = myVal[x].LoseProfit;
+            document.getElementById('chkOther').checked = myVal[x].Other;
+
+            document.getElementById('chkActive').checked = myVal[x].Active;
+            document.getElementById('chkLast_Acc').checked = myVal[x].Last_Acc;
+
+            ev_LastAcc(document.getElementById('chkLast_Acc'));
+
+            document.getElementById('chkCash').checked = myVal[x].Cash;
+            document.getElementById('chkBank').checked = myVal[x].Bank;
+            document.getElementById('chkProduct_Acc').checked = myVal[x].Product_Acc;
+            document.getElementById('chkPOS').checked = myVal[x].POS;
+            document.getElementById('chkRaw_Acc').checked = myVal[x].Raw_Acc;
+            document.getElementById('chkPacking_Acc').checked = myVal[x].Packing_Acc;
+            document.getElementById('chkInBank').checked = myVal[x].InBank;
+            document.getElementById('chkInProgress_Acc').checked = myVal[x].InProgress_Acc;
+            document.getElementById('chkPayable_Acc').checked = myVal[x].Payable_Acc;
+            document.getElementById('chkSupplies_Acc').checked = myVal[x].Supplies_Acc;
+            document.getElementById('chkTools_Acc').checked = myVal[x].Tools_Acc;
+            document.getElementById('chkReceivable_Acc').checked = myVal[x].Receivable_Acc;
+            document.getElementById('chkReceivable_Return_Acc').checked = myVal[x].Receivable_Return_Acc;
+            document.getElementById('chkParts_Acc').checked = myVal[x].Parts_Acc;
+            document.getElementById('chkExpense').checked = myVal[x].Expense;
+            document.getElementById('chkOther_Expense').checked = myVal[x].Other_Expense;
+            document.getElementById('chkAsset_Acc').checked = myVal[x].Asset_Acc;
+            document.getElementById('chkPert_Acc').checked = myVal[x].Pert_Acc;
+            document.getElementById('chkRevenue').checked = myVal[x].Revenue;
+            document.getElementById('chkOther_Revenue').checked = myVal[x].Other_Revenue;
+            document.getElementById('chkDeposit_Other_Acc').checked = myVal[x].Deposit_Other_Acc;
+            document.getElementById('chkPurchase').checked = myVal[x].Purchase;
+            document.getElementById('chkSales').checked = myVal[x].Sales;
+            document.getElementById('chkPurchase_Discount').checked = myVal[x].Purchase_Discount;
+            document.getElementById('chkSales_Discount').checked = myVal[x].Sales_Discount;
+            document.getElementById('chkCost_Basis').checked = myVal[x].Cost_Basis;
+            document.getElementById('chkReturnPurchase').checked = myVal[x].ReturnPurchase;
+            document.getElementById('chkReturnSales').checked = myVal[x].ReturnSales;
+            document.getElementById('chkCost_BasisP').checked = myVal[x].Cost_BasisP;
+            document.getElementById('chkPurchase_Variance').checked = myVal[x].Purchase_Variance;
+            document.getElementById('chkCostsProduct').checked = myVal[x].CostsProduct;
+            document.getElementById('chkConsume_Variance').checked = myVal[x].Consume_Variance;
+            document.getElementById('chkLoss_Profit').checked = myVal[x].Loss_Profit;
+            document.getElementById('chkTolls').checked = myVal[x].Tolls;
+            document.getElementById('chkTolls_Cost').checked = myVal[x].Last_Acc;
+            document.getElementById('chkOpen_Acc').checked = myVal[x].Open_Acc;
+            document.getElementById('chkVAT').checked = myVal[x].VAT;
+            document.getElementById('chkVATP').checked = myVal[x].VATP;
+            document.getElementById('chkClose_Acc').checked = myVal[x].Close_Acc;
+            document.getElementById('chkProfit_Ghesti').checked = myVal[x].Profit_Ghesti;
+            document.getElementById('chkCustomer').checked = myVal[x].Customer;
+            document.getElementById('chkVisitor').checked = myVal[x].Visitor;
+            document.getElementById('chkAcc_Store').checked = myVal[x].Acc_Store;
+            document.getElementById('chkAcc_Sales').checked = myVal[x].Acc_Sales;
+            document.getElementById('chkAcc_PayRecv').checked = myVal[x].Acc_PayRecv;
+            document.getElementById('chkPayRoll').checked = myVal[x].PayRoll;
+        }
+    }
+    function showHideLevels() {
+        for (var i = 1; i <= current_Level; i++) {
+            document.getElementById('lbl_LevelName' + i).hidden = false;
+            document.getElementById('lbl_AccNo' + i).hidden = false;
+            document.getElementById('lbl_AccName' + i).hidden = false;
+        }
+
+        for (var i = current_Level + 1; i <= 9; i++) {
+            document.getElementById('lbl_LevelName' + i).hidden = true;
+            document.getElementById('lbl_AccNo' + i).hidden = true;
+            document.getElementById('lbl_AccName' + i).hidden = true;
+        }
+
+    }
+    function refreshPage() {
+        location.reload();
+    }
+</script>
